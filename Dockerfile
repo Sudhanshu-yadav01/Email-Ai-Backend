@@ -1,14 +1,18 @@
 # Use an official OpenJDK runtime as a parent image
 FROM eclipse-temurin:17-jre-alpine
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the built jar file from the build context
-COPY target/*.jar app.jar
+# Copy Maven wrapper and project files
+COPY . .
 
-# Expose port 8080
+# Build the JAR
+RUN ./mvnw clean package -DskipTests
+
+# Use only the built JAR for the final image
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=0 /app/target/*.jar app.jar
+
 EXPOSE 8080
-
-# Run the jar file
 ENTRYPOINT ["java", "-jar", "app.jar"]
