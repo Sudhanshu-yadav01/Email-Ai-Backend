@@ -1,2 +1,16 @@
 /mvnw text eol=lf
-*.cmd text eol=crlf
+*.cmd text eol=crlf# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Explicitly declare text files you want to always normalize
+*.java text
+*.xml text
+*.md text
+*.properties text
+
+# Treat binary files as binary
+*.jar binary
+*.war binary
+*.png binary
+*.jpg binary
+*.gif binary
